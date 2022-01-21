@@ -1,0 +1,94 @@
+@import "../../../style/theme.scss";
+//$bg_color: rgb(75, 95, 129);
+.currency-container {
+    position: relative;
+    margin: 16px 0;
+
+    .currency-input {
+        margin: 6px 0;
+        background-color: $input-bg-color;
+        border-radius: 15px;
+        padding: 1rem 2rem;
+        font-size: 28px;
+        font-weight: 900;
+        color: white;
+        outline: $light-primary;
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+
+    
+
+        .in-crypto {
+            font-size: 30px;
+            outline: none;
+            word-break: break-all;
+            white-space: nowrap;
+            width: 300px;
+            overflow: hidden;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            color: white;
+            font-weight: 900;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+    
+            /* Firefox */
+            &[type="number"] {
+                -moz-appearance: textfield;
+            }
+        }
+        .in-usd {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .selected-currency {
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+            color: white;
+
+            .selected-currency-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            span {
+                font-size: 20px;
+                margin-left: 8px;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .arrow-circle {
+        width: 20px;
+        height: 20px;
+
+        fill: white;
+        border-radius: 180px;
+        background-color: $input-bg-color;
+        padding: 8px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+        border: 5px $dark-primary solid;
+        // transform: rotate(90deg);
+    }
+}
+
+.price-per-one {
+    text-align: left;
+    color: white;
+    margin-left: 16px;
+}

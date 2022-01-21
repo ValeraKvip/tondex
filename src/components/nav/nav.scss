@@ -1,0 +1,87 @@
+@import "../../style/theme.scss";
+
+nav {
+    height: 56px;
+    display: flex;
+    padding-left: 16px;
+    padding-right: 16px;
+    background: $dark-primary;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    //width: 100%;
+
+    .logo-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-container {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        .app-name {
+            color: white;
+            font-weight: 900;
+            margin-left: 12px;
+            text-align: center;
+            font-size: 19px;
+            align-self: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;           
+        }
+
+        .nav-btns {
+            display: flex;
+            list-style: none;
+            font-size: 16px;
+            font-weight: 900;
+
+            .nav-btn {
+                padding: 12px;             
+            }
+        }
+
+        .nav-btns-active {
+            a {
+                color: $light-primary;
+            }
+        }
+    }
+
+    .icon {
+        width: 36px;
+        height: 36px;
+        margin: auto;
+    }
+
+    .nav-container {
+        display: flex;
+        //  justify-content: space-between;
+        align-items: center;
+    }
+
+    .theme-switch {
+        margin: 0 16px;
+
+        .icon {
+            fill: rgb(206, 206, 66);
+            stroke: rgb(206, 206, 66);
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+    }
+
+    .locale-btn {
+        fill: white;
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+    }
+}

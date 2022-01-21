@@ -1,24 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './icons/ton_symbol.svg';
 import './App.css';
+import Nav from './components/nav/Nav';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Swap from './pages/swap/Swap';
+import Pools from './pages/Pools';
+import TokenSelect from './pages/tokens/TokenSelects';
 
 function App() {
+  console.log('AA');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" id='app'>
+      <BrowserRouter>
+        <Nav></Nav>
+        <Routes>
+          <Route path="/" element={<Swap />} />
+          <Route path="swap" element={<Swap />} />
+          <Route path="pools" element={<Pools />} />
+        </Routes>
+      
+      </BrowserRouter>
     </div>
   );
 }
