@@ -13,11 +13,26 @@
         font-weight: 900;
         color: white;
         outline: $light-primary;
-        display: flex;
-        justify-content: space-between;
+        // display: flex;
+        // justify-content: space-between;
         text-align: left;
 
+        .currency-input-top{
+            display: flex;
+            justify-content: space-between;
+        }
     
+        .currency-input-bottom{
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .balance{
+            font-size: 16px;
+        }
 
         .in-crypto {
             font-size: 30px;

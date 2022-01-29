@@ -1,0 +1,91 @@
+@import "../../style/theme.scss";
+
+.swap-chart-container {
+  height: fit-content;
+  margin: 100px 20px;
+  flex-grow: 1;
+  // max-height: 50%;
+  border-radius: 25px;
+  background-color: $dark-primary;
+  padding: 16px;
+  width: 100%;
+  position: relative;
+
+  .vert-line {
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: coral;
+    top: 0;
+    bottom: 0;
+  }
+
+  .chart-header {
+    display: flex;
+    color: white;
+    font-weight: 900;
+    font-size: 25px;
+    justify-content: space-between;
+    //  align-items: center;
+
+    .chart-toggle {
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      align-items: center;
+
+      display: flex;
+      .switch {
+        margin-left: 5px;
+      }
+     
+      .icon{
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+      }
+    }
+    .chart-header-right {
+      color: $input-bg-color;
+
+      .active {
+        color: $light-primary;
+      }
+      a {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .chart-info {
+    display: flex;
+    font-weight: 900;
+    font-size: 25px;
+    margin-top: 5px;
+ 
+    span {
+      margin-top: 25px;
+      margin-left: 10px;
+      color: $light-primary;
+    }
+
+    .price {
+      margin-top: auto;
+      font-size: 50px;
+      text-align: end;
+      color: white;
+    }
+  }
+}
+
+#swap-chart {
+  // max-width: 500px;
+  //   max-width:  50%;
+  width: 100% !important;
+  max-height: 500px !important;
+  max-height: 100vh;
+  //  flex: 50%;
+  canvas {
+    max-height: 100vh;
+  }
+}

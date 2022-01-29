@@ -13,7 +13,7 @@ export default class MarketWatch {
         this.tokens.push(...tokens);
     }
 
-    public setTokens(...tokens: Token[]) {      
+    public setTokens(...tokens: Token[]) {
         this.tokens = [];
         this.tokens.push(...tokens);
         this.stop();
@@ -24,23 +24,26 @@ export default class MarketWatch {
         try {
             this.stop();
             this.update = update;
-         //   console.log("START ");
-            const getData = async ()=>{
+            //   console.log("START ");
+            const getData = async () => {
                 const requests = [] as any;
                 const coin0 = this.tokens[0];
-                const coin1 = this.tokens[1]               
-                const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=${coin0.id},${coin1.id}`)
-               
+                const coin1 = this.tokens[1]
+
+                const id0 = coin0.id === 'toncoin' ? "tether" : coin0.id;
+                const id1 = coin1.id === 'toncoin' ? "tether" : coin1.id;
+                const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=${id0},${id1}`)
+
                 const result: CoinPrice = {
-                    [coin0.id]: Number.parseFloat(response.data[coin0.id].usd),
-                    [coin1.id]: Number.parseFloat(response.data[coin1.id].usd)
+                    [coin0.id]: Number.parseFloat(response.data[id0].usd),
+                    [coin1.id]: Number.parseFloat(response.data[id1].usd)
                 };
 
-             //   console.log("result ", result);
+              //     console.log("result ", result,response);
                 update(result);
             }
             getData();
-            this.interval = setInterval(getData,1000);
+            this.interval = setInterval(getData, 1000);
 
         } catch (e) {
             console.log("ERR", e);

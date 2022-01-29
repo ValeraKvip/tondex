@@ -4,14 +4,24 @@ import Token from '../../models/Token';
 import axios from "axios";
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import ReactDOM from "react-dom";
-import Spinner from "../../components/spinner/Spinner";
+import Spinner from "../spinner/Spinner";
 
-export default class TokenSelect extends React.Component<{ onClose: () => void, onSelect: (token: Token) => void }, { tokens: Token[], search: string, isLoading: boolean }>{
+const MOST_USED_TOKENS = "MOST_USED_TOKENS";
+
+
+export default class TokenSelect extends React.Component<{ onClose: () => void, onSelect: (token: Token) => void },
+    {
+        mostUsedTokens: Token[]
+        tokens: Token[],
+        search: string,
+        isLoading: boolean
+    }>{
 
     constructor(props: any) {
         super(props);
 
         this.state = {
+            mostUsedTokens: this.getMostUsedTokens(),
             tokens: [] as Token[],
             search: '',
             isLoading: true
@@ -19,29 +29,67 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
 
         this.onSearchInput = this.onSearchInput.bind(this);
         this.loadTokens = this.loadTokens.bind(this);
+        this.onSelect = this.onSelect.bind(this);
     }
 
     componentDidMount() {
-          this.loadTokens();
+        this.loadTokens();
     }
 
     async loadTokens() {
-        const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
-       
+        //  const res =  await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+        const res = await axios.get('assets/tokens.json');
+
         if (res) {
+            console.log('res.data', res.data);
+
             const tokens = this.state.tokens;
+            // const tokens = await import('../../assets/tokens');
+            //   console.log('token',tokens)
+            // if (tokens?.length === 0) {
+            //     tokens.push({
+            //         "id": "toncoin",
+            //         "symbol": "ton",
+            //         "name": "Toncoin",
+            //         "image": "assets/icons/ton.svg"
+            //     });
+            // }
             tokens.push(...res.data);
             this.setState({
-                tokens,
+                tokens: tokens as any,
                 isLoading: false
             });
-        }        
+        }
     }
 
     async onSearchInput(evt: any) {
         this.setState({
             search: evt.target.value
         })
+    }
+
+    getMostUsedTokens(): Token[] {
+        const mostUsed = window.localStorage.getItem(MOST_USED_TOKENS);
+        console.log('mostUsed', mostUsed)
+        return mostUsed ? JSON.parse(mostUsed) : [];
+    }
+
+    onSelect(token: Token) {
+        console.log('onSelect', token)
+        const mostUsed = this.getMostUsedTokens();
+
+        if (!mostUsed.some(s => s.id === token.id)) {
+            if (mostUsed.length >= 5) {
+                mostUsed.splice(0, 1);
+            }
+
+            mostUsed.push(token);
+            console.log('onSelect', 'add')
+            window.localStorage.setItem(MOST_USED_TOKENS, JSON.stringify(mostUsed));
+        }
+
+        this.props.onSelect(token);
+        this.props.onClose()
     }
 
     getFilteredCryptos() {
@@ -59,7 +107,6 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
                 <li className="token-item" >
                     <Spinner></Spinner>
                 </li>
-               
             )
         }
         else if ((!tokens || !tokens.length)) {
@@ -69,12 +116,10 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
         }
 
 
-
-
         return (
             tokens.map(token => {
                 return (
-                    <li key={token.id} className="token-item" onClick={() => { this.props.onSelect(token); this.props.onClose() }}>
+                    <li key={token.id} className="token-item" onClick={() => this.onSelect(token)}>
                         <img src={token.image} />
                         <div className="token-item-desc">
                             <div className="token-item-symbol">{token.symbol}</div>
@@ -87,7 +132,7 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
     render() {
         return ReactDOM.createPortal(
             <div className="token-select modal" onClick={this.props.onClose}>
-                <div className="token-select-container" onClick={evt=>evt.stopPropagation()}>
+                <div className="token-select-container" onClick={evt => evt.stopPropagation()}>
                     <div className="token-select-header-container">
                         <div className="token-select-header">
                             <span>Select</span>
@@ -97,6 +142,19 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
                     <div className="token-select-search">
                         <input placeholder="Search name or paste address" type="text" value={this.state.search} onChange={this.onSearchInput} />
                     </div>
+                    <div className="token-most-used-container">
+                        {
+                            this.state.mostUsedTokens.map(token => {
+                                return (
+
+                                    <div key={token.id} className="most-used-item" onClick={() => this.onSelect(token)}>
+                                        <img src={token.image} />
+                                        <div>{token.symbol}</div>
+                                    </div>)
+                            })
+                        }
+
+                    </div>
                     <ul className="token-select-list">
                         {
                             this.getFilteredCryptos()
@@ -104,7 +162,7 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
                     </ul>
                 </div>
             </div>
-            , document.body!
+            , document.body
         )
     }
 }

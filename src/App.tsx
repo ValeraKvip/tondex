@@ -5,21 +5,32 @@ import Nav from './components/nav/Nav';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Swap from './pages/swap/Swap';
 import Pools from './pages/Pools';
-import TokenSelect from './pages/tokens/TokenSelects';
+import TokenSelect from './components/tokens/TokenSelects';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import WalletController from './controllers/WalletController';
+import WalletMock from './wallets/WalletMock';
+
+
 
 function App() {
-  console.log('AA');
+  const walletController =  WalletController.instance();
+  walletController.setProvider(new WalletMock());
+  walletController.checkout();
+  
   return (
     <div className="App" id='app'>
-      <BrowserRouter>
-        <Nav></Nav>
-        <Routes>
-          <Route path="/" element={<Swap />} />
-          <Route path="swap" element={<Swap />} />
-          <Route path="pools" element={<Pools />} />
-        </Routes>
-      
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Nav></Nav>
+          <Routes>
+            <Route path="/" element={<Swap />} />
+            <Route path="swap" element={<Swap />} />
+            <Route path="pools" element={<Pools />} />
+          </Routes>
+
+        </BrowserRouter>
+      </Provider>
     </div>
   );
 }

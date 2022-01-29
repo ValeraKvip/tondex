@@ -1,57 +1,48 @@
 import './connect-wallet.scss';
 
 import React from "react";
+import { connect } from 'react-redux';
+import ConnectWallet from '../../controllers/WalletController';
 
-export default class ConnectWalletBtn extends React.Component {
+class ConnectWalletBtn extends React.Component<{ address: string }> {
 
   constructor(props: any) {
     super(props);
 
-    const ethereum = (window as any).ethereum;
-
-    if (ethereum !== 'undefined') {
-
-
-      // Time to reload your interface with accounts[0]!
-
-
-      console.log('accountsChanged', ethereum.selectedAddress, ethereum.networkVersion, ethereum.isConnected());
-
-    }
-
     this.connect = this.connect.bind(this);
-    this.checkoutConnectedWallet = this.checkoutConnectedWallet.bind(this);
-    this.checkoutConnectedWallet(ethereum);
-  }
-
-  async checkoutConnectedWallet(ethereum: any) {
-    const accounts = await ethereum.request({ method: 'eth_accounts' })
-    console.log('checkoutConnectedWallet', accounts, accounts);
+    this.getAddress = this.getAddress.bind(this);
   }
 
   async connect() {
     console.log('connect');
+    ConnectWallet.instance().connect();
+  }
 
-    const ethereum = (window as any).ethereum;
-
-    if (ethereum !== 'undefined') {
-      console.log('MetaMask is installed!', (window as any).ethereum);
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      const address = await ethereum.enable();
-      console.log('Accounts', accounts, address);
-
-      ethereum.on('accountsChanged', function (_accounts: any) {
-        // Time to reload your interface with accounts[0]!
-        console.log('accountsChanged', _accounts);
-      });
+  getAddress() {
+    if (!this.props.address) {
+      return 'Connect Wallet'
     }
+    
+    if (this.props.address.length < 11) {
+      return this.props.address;
+    }
+
+    return `${this.props.address.substring(0, 5)}...${this.props.address.substring(this.props.address.length - 5, this.props.address.length)} `;
   }
 
   render() {
     return (
-      <a className="connect-wallet" onClick={this.connect}>
-        <span>Connect Wallet</span>
+      <a className="connect-wallet" onClick={()=>ConnectWallet.instance().connect()}>
+        <span>{this.getAddress()}</span>
       </a>
     );
   }
 }
+
+const mapStateToProps = function (state: any) {
+  return {
+    address: state.wallet.address,
+  }
+}
+
+export default connect(mapStateToProps)(ConnectWalletBtn);

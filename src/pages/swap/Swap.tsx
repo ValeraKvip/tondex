@@ -1,13 +1,19 @@
 import React from 'react';
+import ChartView from '../../components/chart/ChartView';
+import SwapBtn from '../../components/swap-btn/SwapBtn';
+import Toggle from '../../components/toggle/Toggle';
 import ConnectWalletBtn from '../../components/wallet/ConnectWalletBtn';
 import CoinData from '../../models/CoinData';
 import MarketWatch, { CoinPrice } from '../../models/MarketWatch';
 import Token from '../../models/Token';
+import store from '../../store/store';
 import { formatPrice } from '../../utils';
 import CurrencyInput from './CurrencyInput/CurrencyInput';
 import InputContainer from './CurrencyInput/InputContainer';
 import SettingBtn from './settings/SettingsBtn';
+import SlippageTolerance from './slippage_tolerance/SlippageTolerance';
 import './swap.scss';
+import TradeDeadline from './trade-deadline/TradDeadline';
 
 
 export default class Swap extends React.Component<any, { coins: CoinData[] }> {
@@ -26,7 +32,7 @@ export default class Swap extends React.Component<any, { coins: CoinData[] }> {
                 icon: "ton.svg",
                 price: 0,
                 value: '' as any,
-                token: { "id": "bitcoin", "symbol": "btc", "name": "Bitcoin", "image": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579" }
+                token: { "id": "toncoin", "symbol": "ton", "name": "Toncoin", "image": "assets/icons/ton.svg" }
             },
             {
                 name: "Bitcon",
@@ -85,18 +91,19 @@ export default class Swap extends React.Component<any, { coins: CoinData[] }> {
             return this.onSwap();
         }
 
-        const coins = this.state.coins;
-        const coin = coins[index];
+        const coins = [...this.state.coins];
+        const coin = { ...coins[index] };
         coin.token = token;
         coins[index] = coin;
         this.setState({
             coins
         })
 
-        this.marketWatch.setTokens(this.state.coins[0].token, this.state.coins[1].token);
+        this.marketWatch.setTokens(coins[0].token, coins[1].token);
     }
 
     onValueSet(value: number, token: Token) {
+      
         const coin0 = this.state.coins[0];
         const coin1 = this.state.coins[1]
 
@@ -123,6 +130,7 @@ export default class Swap extends React.Component<any, { coins: CoinData[] }> {
             }
         }
 
+        console.log("##val!!!@@@@",coin0, coin1)
         this.setState({
             coins: [coin0, coin1]
         })
@@ -139,6 +147,7 @@ export default class Swap extends React.Component<any, { coins: CoinData[] }> {
     render() {
         return (
             <div id="swap-page">
+                <ChartView from={this.state.coins[0]} to={this.state.coins[1]}></ChartView>
                 <div className="swap-container">
                     <div className='swap-container-header'>
                         <h3>Swap</h3>
@@ -146,9 +155,13 @@ export default class Swap extends React.Component<any, { coins: CoinData[] }> {
                     </div>
 
                     <InputContainer from={this.state.coins[0]} to={this.state.coins[1]} onSwap={this.onSwap} onValueSet={this.onValueSet} onSelectCoin={this.onSelectCoin}></InputContainer>
-                    <p className='price-per-one'> 1 {this.state.coins[0].token.symbol} = {formatPrice(this.state.coins[1].price / this.state.coins[0].price)} {this.state.coins[1].token.symbol}</p>
-                    <ConnectWalletBtn></ConnectWalletBtn>
+                    <p className='price-per-one'> 1 {this.state.coins[0].token.symbol} = {formatPrice(this.state.coins[0].price / this.state.coins[1].price)} {this.state.coins[1].token.symbol}</p>
+                   <SlippageTolerance></SlippageTolerance>
+                   <TradeDeadline></TradeDeadline>
+                    {store.getState().wallet.address ? <SwapBtn from={this.state.coins[0]} to={this.state.coins[1]}></SwapBtn> : <ConnectWalletBtn></ConnectWalletBtn>}
+
                 </div>
+
             </div>
         )
     }

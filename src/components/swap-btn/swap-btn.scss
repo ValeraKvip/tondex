@@ -1,0 +1,20 @@
+@import "../../style/theme.scss";
+
+.swap-btn {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 24px;
+    text-align: center;
+    background: $light-primary;
+    padding: 12px 32px 12px 28px;
+    outline: none;
+    border: none;
+    color: white;
+    font-weight: 900;
+}
+
+.swap-btn-disabled {
+    @extend .swap-btn;
+    background: $input-bg-color;
+}
