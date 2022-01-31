@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import LottieView from '../../../components/lottie/LottieView';
 import { PoolState } from '../../../store/PoolReducer';
 import PoolController from '../../../controllers/PoolController';
+import { withTranslation } from 'react-i18next';
 
 interface Props extends PoolState {
     onClose: () => void,
@@ -31,12 +32,14 @@ export class ConfirmSupply extends React.Component<Props, { done: boolean }> {
     }
 
     render() {
+        const { t } = this.props as any;
+
         return ReactDOM.createPortal(
             <div className="confirm-supply modal" onClick={this.props.onClose}>
                 <div className="confirm-supply-container" onClick={evt => evt.stopPropagation()}>
                     <div className="confirm-supply-header-container">
                         <div className="confirm-supply-header">
-                            <span>  {this.state.done ? 'Successfully Supplied' : 'Confirm Supply'}</span>
+                            <span>  {this.state.done ? t('pool.confirm.successfully_supplied') : t('pool.confirm.confirm_supply')}</span>
                             <CloseIcon className="close-btn" onClick={this.props.onClose}></CloseIcon>
                         </div>
                     </div>
@@ -45,24 +48,24 @@ export class ConfirmSupply extends React.Component<Props, { done: boolean }> {
 
 
                             <p className='supply-confirm-note'>
-                                If the price changes by more than 1% your transaction will revert.
+                                {t('pool.confirm.info')}
                             </p>
 
                             <div className='supply-confirm-info'>
                                 <div className='flex-space-between'>
-                                    <span> {this.props.from.token.symbol} Deposit:</span>
+                                    <span><b> {this.props.from.token.symbol}</b> {t('pool.confirm.deposit')}:</span>
                                     <span>{Number(parseFloat(String(this.props.from.value)).toFixed(6))}({Number((this.props.from.price).toFixed(6))}$)</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span> {this.props.to.token.symbol} Deposit:</span>
+                                    <span><b>{this.props.to.token.symbol} </b> {t('pool.confirm.deposit')}:</span>
                                     <span>{Number(parseFloat(String(this.props.to.value)).toFixed(6))}({Number((this.props.to.price).toFixed(6))}$)</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span>Tier fee:</span>
+                                    <span>{t('pool.confirm.tier_fee')}:</span>
                                     <span>{this.props.tier}%</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span> Share of Pool:</span>
+                                    <span>{t('pool.confirm.share_of_pool')}:</span>
                                     <span>1% </span>
                                 </div>
 
@@ -71,7 +74,7 @@ export class ConfirmSupply extends React.Component<Props, { done: boolean }> {
                     }
                     <LottieView enable={this.state.done} path='assets/anims/anim_dive.json' ></LottieView>
                     <a className='btn confirm-btn btn-interact' onClick={this.confirm.bind(this)}>
-                        {this.state.done ? 'Exit' : 'Confirm'}
+                        {this.state.done ? t('swap.confirm.exit') : t('swap.confirm.confirm')}
                     </a>
                 </div>
             </div>
@@ -85,4 +88,4 @@ const mapStateToProps = function (state: { pool: PoolState }) {
     return state.pool
 }
 
-export default connect(mapStateToProps)(ConfirmSupply);
+export default withTranslation()(connect(mapStateToProps)(ConfirmSupply));

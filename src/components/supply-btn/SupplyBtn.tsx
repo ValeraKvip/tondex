@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import WalletController from "../../controllers/WalletController";
 import { PoolState } from '../../store/PoolReducer';
 import ConfirmSupply from '../../pages/pools/confirm_supply/ConfirmSupply';
+import { withTranslation } from 'react-i18next';
 
 interface State {
     balanceFrom: number,
@@ -42,6 +43,8 @@ export class SupplyBtn extends React.Component<Props, State> {
     }
 
     render() {
+        const { t } = this.props as any;
+
         var confirmSupply = null;
         if (this.state.showConfirmSupply) {
             confirmSupply = <ConfirmSupply onClose={() => this.setState({ showConfirmSupply: false })} />
@@ -49,11 +52,11 @@ export class SupplyBtn extends React.Component<Props, State> {
 
         var btn = (this.state.balanceFrom >= this.props.from.value && this.props.from.value != 0)
             && (this.state.balanceTo >= this.props.to.value && this.props.to.value != 0)
-            ? <div className="supply-btn btn-interact" onClick={() => this.setState({ showConfirmSupply: true })}>Supply</div >
-            : <div className="supply-btn-disabled btn-interact">Insufficient  balance</div >
+            ? <div className="supply-btn btn-interact" onClick={() => this.setState({ showConfirmSupply: true })}>{t('pool.supply')}</div >
+            : <div className="supply-btn-disabled btn-interact"> {t('pool.insufficient_balance')}</div >
 
         if (!this.props.from.value) {
-            btn = <div className="supply-btn-disabled btn-interact">Enter an amount</div >
+            btn = <div className="supply-btn-disabled btn-interact">{t('pool.enter_amount')}</div >
         }
         return (
             <div>
@@ -71,4 +74,4 @@ const mapStateToProps = function (state: { pool: PoolState }) {
     }
 }
 
-export default connect(mapStateToProps)(SupplyBtn);
+export default withTranslation()(connect(mapStateToProps)(SupplyBtn));

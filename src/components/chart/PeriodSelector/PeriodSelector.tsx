@@ -1,9 +1,12 @@
 import './period-selector.scss';
+import { useTranslation } from 'react-i18next';
+
 
 
 export default function PeriodSelector(props: { active: number, changePeriod: (index: number) => void }) {
 
-    const btns = ['D', 'W', 'M'];
+    const { t, i18n } = useTranslation();
+    const btns = [t('chart.day'), t('chart.week'),t('chart.month')];
 
     return (
         <div className='period-selector'>

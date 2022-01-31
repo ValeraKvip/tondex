@@ -5,15 +5,12 @@ import store from '../../../store/store';
 import { SwapState, updateSwap } from '../../../store/SwapReducer';
 import { checkInputIsFloat } from '../../../utils';
 import './slippage-tolerance.scss';
+import { withTranslation } from 'react-i18next';
 
 export class SlippageTolerance extends React.Component<Pick<SwapState,'slippageTolerance'>, any> {
 
     constructor(props: any) {
-        super(props);
-        // this.state = {
-        //     percentInput: '2'
-        // }
-
+        super(props);  
         this.onInput = this.onInput.bind(this);
     }
 
@@ -27,43 +24,33 @@ export class SlippageTolerance extends React.Component<Pick<SwapState,'slippageT
         const str = newValue > 10 ? '10' : evt.target.value;
         evt.target.style.width = ((str.length ? str.length : 1) * 10) + "px";
 
-        store.dispatch(updateSwap({ slippageTolerance: str }));
-        // this.setState({
-        //     percentInput: str
-        // })
+        store.dispatch(updateSwap({ slippageTolerance: str }));    
     }
 
     onBlur(evt: React.FocusEvent<HTMLInputElement>) {
-        if (!this.props.slippageTolerance) {
-            // this.setState({
-            //     percentInput: '0'
-            // })
-            store.dispatch(updateSwap({ slippageTolerance: '0' }));
-            // this.setState({
+        if (!this.props.slippageTolerance) {     
+            store.dispatch(updateSwap({ slippageTolerance: '0' }));          
         }
 
         const str = String(this.state.percentInput);
 
         if (str?.length && str[str.length - 1] === '.') {
-
-            evt.target.style.width = ((str.length - 1) * 10) + "px"
-            // this.setState({
-            //     percentInput: str.substring(0, str.length - 1)
-            // })
-            store.dispatch(updateSwap({ slippageTolerance: str.substring(0, str.length - 1) }));
-            // this.setState({
+            evt.target.style.width = ((str.length - 1) * 10) + "px"  
+            store.dispatch(updateSwap({ slippageTolerance: str.substring(0, str.length - 1) }));          
         }
     }
 
     render(): ReactNode {
+        const {t} = this.props as any;
+
         return (
             <div className='slippage-tolerance '>
                 <span>
-                    Slippage Tolerance
+                {t('swap.slippage')}
                 </span>
                 <div className='percentage tooltip'>
                     <input type="text" className='input' value={this.props.slippageTolerance} onInput={this.onInput} onBlur={this.onBlur.bind(this)} />%
-                    <span className="tooltiptext">Click to edit</span>
+                    <span className="tooltiptext">{t('swap.click_to_edit')}</span>
                 </div>
 
             </div>
@@ -78,5 +65,5 @@ const mapStateToProps = function (state: { swap: SwapState }) {
     }
 }
 
-export default connect(mapStateToProps)(SlippageTolerance);
+export default connect(mapStateToProps)(withTranslation()(SlippageTolerance));
 

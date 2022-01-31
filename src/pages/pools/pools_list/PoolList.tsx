@@ -5,6 +5,7 @@ import './pool-list.scss';
 import { bigNumberFormat } from '../../../utils';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { withTranslation } from 'react-i18next';
 
  class PoolList extends React.Component<any, { data: any }> {
 
@@ -30,12 +31,12 @@ import { useNavigate } from "react-router-dom";
     }
 
     handleOnClick(id:string,data:any){
-     
-        console.log('#NAV',this.props.navigate)
+          
        this.props.navigate(`${id}`);
     }
 
     render(): React.ReactNode {
+        const { t } = this.props as any;
 
         var rows = [] as any;
         var index = 1;
@@ -70,9 +71,9 @@ import { useNavigate } from "react-router-dom";
                     <thead>
                         <tr className='table-header'>
                             <td>#</td>
-                            <td>Pool</td>
-                            <td>Volume 24</td>
-                            <td>LIQUIDITY</td>
+                            <td>{t('pool.pool')}</td>
+                            <td>{t('pool.volume')} 24</td>
+                            <td>{t('pool.liquidity')}</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,4 +92,4 @@ function PoolListWithNavigate(props:any) {
     return <PoolList {...props} navigate={navigate} />
 }
 
-export default PoolListWithNavigate
+export default  withTranslation()(PoolListWithNavigate);

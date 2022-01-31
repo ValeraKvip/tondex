@@ -10,6 +10,7 @@ import LottieView from '../lottie/LottieView';
 import { delay } from '../../utils';
 Chart.register(...registerables);
 
+
 interface Props {
   to: CoinData,
   from: CoinData,

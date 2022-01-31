@@ -3,6 +3,8 @@ import './connect-wallet.scss';
 import React from "react";
 import { connect } from 'react-redux';
 import ConnectWallet from '../../controllers/WalletController';
+import { withTranslation } from 'react-i18next';
+
 
 class ConnectWalletBtn extends React.Component<{ address: string }> {
 
@@ -19,8 +21,10 @@ class ConnectWalletBtn extends React.Component<{ address: string }> {
   }
 
   getAddress() {
+    const { t } = this.props as any
+
     if (!this.props.address) {
-      return 'Connect Wallet'
+      return t('connect_wallet')
     }
     
     if (this.props.address.length < 11) {
@@ -40,6 +44,7 @@ class ConnectWalletBtn extends React.Component<{ address: string }> {
   }
 
   render() {
+   ;
     return (
       <a className="connect-wallet btn-interact" onClick={this.onClick.bind(this)}>
         <span>{this.getAddress()}</span>
@@ -54,4 +59,4 @@ const mapStateToProps = function (state: any) {
   }
 }
 
-export default connect(mapStateToProps)(ConnectWalletBtn);
+export default withTranslation()(connect(mapStateToProps)(ConnectWalletBtn));

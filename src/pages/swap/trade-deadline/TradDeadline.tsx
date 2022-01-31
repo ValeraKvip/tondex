@@ -4,6 +4,7 @@ import { checkInputIsInt } from '../../../utils';
 import { SwapState, updateSwap } from '../../../store/SwapReducer';
 import { connect } from 'react-redux';
 import store from '../../../store/store';
+import { withTranslation } from 'react-i18next';
 
 export class TradeDeadline extends React.Component<Pick<SwapState,'tradeDeadline'>,any> {
 
@@ -43,14 +44,16 @@ export class TradeDeadline extends React.Component<Pick<SwapState,'tradeDeadline
     }
 
     render(): ReactNode {
+        const {t} = this.props as any;
+
         return (
             <div className='trade-deadline'>
                 <span>
-                    Trade deadline
+                    {t('swap.trade_deadline')}                  
                 </span>
                 <div className='deadline tooltip'>
-                    <input type="text" className='input' value={this.props.tradeDeadline} onInput={this.onInput} onBlur={this.onBlur.bind(this)} />mins
-                    <span className="tooltiptext">Click to edit</span>
+                    <input type="text" className='input' value={this.props.tradeDeadline} onInput={this.onInput} onBlur={this.onBlur.bind(this)} />{t('swap.mins')}
+                    <span className="tooltiptext">{t('swap.click_to_edit')}</span>
                 </div>
             </div>
         )
@@ -63,4 +66,4 @@ const mapStateToProps = function (state: { swap: SwapState }) {
     }
 }
 
-export default connect(mapStateToProps)(TradeDeadline);
+export default connect(mapStateToProps)(withTranslation()(TradeDeadline));

@@ -5,9 +5,10 @@ import React from 'react';
 import TokenSelect from '../../../components/tokens/TokenSelects';
 import Token from '../../../models/Token';
 import WalletController from '../../../controllers/WalletController';
-import store from '../../../store/store';
 import { WalletState } from '../../../store/WalletReducer';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import { compose } from 'redux';
 
 interface Props {
     data: CoinData,
@@ -62,7 +63,7 @@ export  class CurrencyInput extends React.Component<Props, State>
 
     shortPrice(price: any, fixed: number = 6) {
         const num = Number.parseFloat(price);
-        if (isNaN(num) || String(price).match(/^[0-9]+.[0]*$/)) {// || String(price).match(/\d[.]0*$/)
+        if (isNaN(num) || String(price).match(/^[0-9]+.[0]*$/)) {
             return price;
         }
 
@@ -70,6 +71,8 @@ export  class CurrencyInput extends React.Component<Props, State>
     }
 
     render(): React.ReactNode {
+        const {t} = this.props as any;
+
         var showModal = null;
         if (this.state.showSelectToken) {
             showModal = <TokenSelect onClose={() => this.setState({ showSelectToken: false })} onSelect={this.props.onSelectCoin}></TokenSelect>
@@ -92,7 +95,7 @@ export  class CurrencyInput extends React.Component<Props, State>
                     <div >
                         {this.shortPrice(this.props.data.price * Number(this.props.data.value), 3)}$ (1 {this.props.data.token.symbol} ~ {this.shortPrice(this.props.data.price, 2)}$)
                     </div>
-                    <span >{this.props.wallet.address ? `Balance: ${this.state.balance}` : ''}</span>
+                    <span >{this.props.wallet.address ? `${t('swap.balance')}: ${this.state.balance}` : ''}</span>
 
                 </div>
                 {showModal}
@@ -107,4 +110,4 @@ const mapStateToProps = function (state: {wallet: WalletState }) {
     }
 }
 
-export default connect(mapStateToProps)(CurrencyInput);
+export default withTranslation()(connect(mapStateToProps)(CurrencyInput));

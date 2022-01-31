@@ -2,7 +2,7 @@ import './nav.scss';
 import logo from '../../icons/ton_symbol.svg';
 import DayNightButton from './DayNightButton';
 import ConnectWalletBtn from '../wallet/ConnectWalletBtn';
-import SwitchLocale from './SwitchLocale';
+import SwitchLocale from './local_btn/SwitchLocale';
 import NavBtns from './NavBtns';
 import { Link } from "react-router-dom";
 

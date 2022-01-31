@@ -5,6 +5,7 @@ import CoinData from "../../models/CoinData";
 import  ConfirmSwap  from "../../pages/swap/confirm_swap/ConfirmSwap";
 import { SwapState } from "../../store/SwapReducer";
 import './swap-btn.scss';
+import { withTranslation } from 'react-i18next';
 
 interface Props {
     to: CoinData,
@@ -39,17 +40,18 @@ export class SwapBtn extends React.Component<Props, State> {
     }
 
     render() {
+        const {t} = this.props as any;
         var confirmSwap = null;
         if (this.state.showConfirmSwap) {
             confirmSwap = <ConfirmSwap onClose={() => this.setState({ showConfirmSwap: false })} ></ConfirmSwap>
         }
 
         var btn = this.state.balance >= this.props.from.value && this.props.from.value != 0
-            ? <div className="swap-btn btn-interact" onClick={() => this.setState({ showConfirmSwap: true })}>Swap</div >
-            : <div className="swap-btn-disabled btn-interact">Insufficient  balance</div >
+            ? <div className="swap-btn btn-interact" onClick={() => this.setState({ showConfirmSwap: true })}>{t('swap.swap')}</div >
+            : <div className="swap-btn-disabled btn-interact">{t('swap.insufficient_balance')}</div >
 
         if (!this.props.from.value) {
-            btn = <div className="swap-btn-disabled btn-interact">Enter an amount</div >
+            btn = <div className="swap-btn-disabled btn-interact">{t('swap.enter_amount')}</div >  
         }
         return (
             <div>
@@ -68,4 +70,4 @@ const mapStateToProps = function (state: { swap: SwapState }) {
     }
 }
 
-export default connect(mapStateToProps)(SwapBtn);
+export default withTranslation()(connect(mapStateToProps)(SwapBtn));

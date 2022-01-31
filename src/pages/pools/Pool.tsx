@@ -1,16 +1,17 @@
 import React from 'react';
 import AddPool from './add_pool/AddPool';
 import './pool.scss';
-import  PoolListWithNavigate  from './pools_list/PoolList';
+import PoolListWithNavigate from './pools_list/PoolList';
 import SavedPools from './saved_pools/SavedPools';
 import { ReactComponent as ArrowBack } from '../../icons/down_arrow_icon.svg';
+import { withTranslation } from 'react-i18next';
 
 
 const ADD_POOL = 'add-pool';
 const POOL_LIST = 'pool-list';
 
 
-export class Pool extends React.Component<any, { component: string }> {
+ class Pool extends React.Component<any, { component: string }> {
 
     constructor(props: any) {
         super(props);
@@ -20,6 +21,8 @@ export class Pool extends React.Component<any, { component: string }> {
         }
     }
     render(): React.ReactNode {
+        const { t } = this.props;
+
         return (
             <div id='page-pool'>
 
@@ -29,8 +32,8 @@ export class Pool extends React.Component<any, { component: string }> {
                 <div className='pool-container'>
                     <div className='pool-container-header'>
                         {this.state.component === ADD_POOL ? <ArrowBack className='arrow-back' onClick={() => this.setState({ component: POOL_LIST })}></ArrowBack> : ''}
-                        <h3> {this.state.component == ADD_POOL ? 'Add Liquidity' : 'Pool Overview'} </h3>
-                        {this.state.component === POOL_LIST ? <a className='btn btn-interact' onClick={() => this.setState({ component: ADD_POOL })}>+ Add Liquidity </a> : ''}
+                        <h3> {this.state.component == ADD_POOL ? t('pool.add_liquidity') : t('pool.pool_overview')} </h3>
+                        {this.state.component === POOL_LIST ? <a className='btn btn-interact' onClick={() => this.setState({ component: ADD_POOL })}>+ {t('pool.add_liquidity')} </a> : ''}
 
                     </div>
 
@@ -42,10 +45,10 @@ export class Pool extends React.Component<any, { component: string }> {
 
                     </div>
                 </div>
-
-
-
             </div >
         )
     }
 }
+
+
+export default withTranslation()(Pool)

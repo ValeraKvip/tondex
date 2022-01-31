@@ -1,11 +1,8 @@
 import './remove_pool_btn.scss';
 import React from "react";
-import { connect } from "react-redux";
-import WalletController from "../../controllers/WalletController";
 import { PoolState } from '../../store/PoolReducer';
-import ConfirmSupply from '../../pages/pools/confirm_supply/ConfirmSupply';
-import { SavedPoolState } from '../../store/SavedPoolReducer';
 import ConfirmRemove from '../../pages/pools/confirm_remove/ConfirmRemove';
+import { withTranslation } from 'react-i18next';
 
 interface State {
 
@@ -17,7 +14,7 @@ type Props = {
     index: number
 };
 
-export class RemovePoolBtn extends React.Component<Props, State> {
+ class RemovePoolBtn extends React.Component<Props, State> {
 
     constructor(prop: any) {
         super(prop);
@@ -28,6 +25,8 @@ export class RemovePoolBtn extends React.Component<Props, State> {
 
 
     render() {
+        const { t } = this.props as any;
+
         var confirmRemove = null;
         if (this.state.showConfirmRemove) {
             confirmRemove = <ConfirmRemove data={this.props.pool} index={this.props.index} onClose={() => this.setState({ showConfirmRemove: false })} />
@@ -35,10 +34,12 @@ export class RemovePoolBtn extends React.Component<Props, State> {
 
         return (
             <div>
-                <div className="remove-pool-btn btn btn-interact" onClick={()=>this.setState({showConfirmRemove:true})}>Remove</div >
+                <div className="remove-pool-btn btn btn-interact" onClick={()=>this.setState({showConfirmRemove:true})}>{t('pool.remove')}</div >
                 {confirmRemove}
             </div>
         )
     }
 }
 
+
+export default withTranslation()(RemovePoolBtn);

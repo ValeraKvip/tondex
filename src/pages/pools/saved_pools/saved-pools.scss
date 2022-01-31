@@ -1,6 +1,6 @@
 .saved-pools {
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 60vh;
     &::-webkit-scrollbar {
         width: 4px;

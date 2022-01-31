@@ -8,6 +8,9 @@ import { SwapState, updateSwap } from '../../../store/SwapReducer';
 import ReactDOM from 'react-dom';
 import LottieView from '../../../components/lottie/LottieView';
 import store from '../../../store/store';
+import { withTranslation } from 'react-i18next';
+
+
 
 interface Props extends SwapState {
     onClose: () => void,
@@ -34,13 +37,13 @@ export class ConfirmSwap extends React.Component<Props, { done: boolean }> {
             return this.props.onClose()
         }
 
-        
+
         const from = { ...this.props.from };
         from.value = '';
 
         const to = { ...this.props.to };
         to.value = '';
-     store.dispatch(updateSwap({
+        store.dispatch(updateSwap({
             from, to,
             slippageTolerance: '2',
             tradeDeadline: '30'
@@ -49,12 +52,14 @@ export class ConfirmSwap extends React.Component<Props, { done: boolean }> {
     }
 
     render() {
+        const { t } = this.props as any;
+
         return ReactDOM.createPortal(
             <div className="confirm-swap modal" onClick={this.props.onClose}>
                 <div className="confirm-swap-container" onClick={evt => evt.stopPropagation()}>
                     <div className="confirm-swap-header-container">
                         <div className="confirm-swap-header">
-                            <span>  {this.state.done ? 'Successfully Swapped' : 'Confirm Swap'}</span>
+                            <span>  {this.state.done ?t('swap.confirm.successfully_swapped'): t('swap.confirm.confirm_swap')}</span>
                             <CloseIcon className="close-btn" onClick={this.props.onClose}></CloseIcon>
                         </div>
                     </div>
@@ -65,28 +70,29 @@ export class ConfirmSwap extends React.Component<Props, { done: boolean }> {
                             <SwapItem data={this.props.to}></SwapItem>
 
                             <p className='swap-confirm-note'>
-                                Output is estimated. You will receive at least {this.getMinimumReceived()} {this.props.to.token.symbol} or the transaction will revert
+                                {t('swap.confirm.info',{min:this.getMinimumReceived(), symbol:this.props.to.token.symbol})}
+                                {/* Output is estimated. You will receive at least {this.getMinimumReceived()} {this.props.to.token.symbol} or the transaction will revert */}
                             </p>
 
                             <div className='swap-confirm-info'>
                                 <div className='flex-space-between'>
-                                    <span>Price:</span>
+                                    <span>{t('swap.confirm.price')}:</span>
                                     <span>{Number((this.props.from.price / this.props.to.price).toFixed(6))}  {this.props.from.token.symbol}/{this.props.to.token.symbol} </span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span>Minimum received:</span>
+                                    <span>{t('swap.confirm.min_received')}:</span>
                                     <span>{this.getMinimumReceived()}</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span>Slippage Tolerance:</span>
+                                    <span>{t('swap.slippage')}:</span>
                                     <span>{this.props.slippageTolerance}%</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span>Trade deadline:</span>
-                                    <span>{this.props.tradeDeadline} mins</span>
+                                    <span>{t('swap.trade_deadline')}:</span>
+                                    <span>{this.props.tradeDeadline} {t('swap.mins')}</span>
                                 </div>
                                 <div className='flex-space-between'>
-                                    <span>Liquidity provider fee:</span>
+                                    <span>{t('swap.confirm.provider_fee')}:</span>
                                     <span>0.01 {this.props.from.token.symbol}</span>
                                 </div>
                             </div>
@@ -95,7 +101,7 @@ export class ConfirmSwap extends React.Component<Props, { done: boolean }> {
                     }
                     <LottieView enable={this.state.done} path='assets/anims/anim_yeah.json'></LottieView>
                     <a className='btn confirm-btn btn-interact' onClick={this.onClick.bind(this)}>
-                        {this.state.done ? 'Exit' : 'Confirm'}
+                        {this.state.done ? t('swap.confirm.exit') : t('swap.confirm.confirm')}
                     </a>
                 </div>
             </div>
@@ -109,4 +115,4 @@ const mapStateToProps = function (state: { swap: SwapState }) {
     return state.swap
 }
 
-export default connect(mapStateToProps)(ConfirmSwap);
+export default withTranslation()(connect(mapStateToProps)(ConfirmSwap));

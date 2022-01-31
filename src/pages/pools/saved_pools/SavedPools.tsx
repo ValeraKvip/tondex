@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RemovePoolBtn } from '../../../components/remove_pool_btn/RemovePoolBtn';
+import  RemovePoolBtn  from '../../../components/remove_pool_btn/RemovePoolBtn';
 import PoolController from '../../../controllers/PoolController';
 import { SavedPoolState, updateSavedPool } from '../../../store/SavedPoolReducer';
 import './saved-pools.scss';
+import { withTranslation } from 'react-i18next';
 
 
 export class SavedPools extends React.Component<SavedPoolState,any> {
@@ -25,13 +26,15 @@ export class SavedPools extends React.Component<SavedPoolState,any> {
 
 
     render(): React.ReactNode {
+        const { t } = this.props as any;
+
         if (!this.props.pools?.length) {
             return ''
         }
         return (
             <div className='pool-container pool-container-left '>
                 <div className='pool-container-header'>
-                    <h3>Your Liquidity</h3>
+                    <h3>{t('pool.your_liquidity')}</h3>
                 </div>
                 <div className='saved-pools'>
                     {
@@ -67,4 +70,4 @@ const mapStateToProps = function (state: { savedPool: SavedPoolState }) {
     }
 }
 
-export default connect(mapStateToProps)(SavedPools);
+export default withTranslation()(connect(mapStateToProps)(SavedPools));

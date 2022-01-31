@@ -12,6 +12,7 @@ import SettingBtn from './settings/SettingsBtn';
 import SlippageTolerance from './slippage_tolerance/SlippageTolerance';
 import './swap.scss';
 import TradeDeadline from './trade-deadline/TradDeadline';
+import { withTranslation } from 'react-i18next';
 
 
 export class Swap extends React.Component<{
@@ -26,12 +27,13 @@ export class Swap extends React.Component<{
     }
 
     render() {
+        const {t} = this.props as any;
         return (
             <div id="swap-page">
                 <ChartView from={this.props.from} to={this.props.to}></ChartView>
                 <div className="swap-container">
                     <div className='swap-container-header'>
-                        <h3>Swap</h3>
+                        <h3>{t('swap.swap')}</h3>
                         <SettingBtn></SettingBtn>
                     </div>
 
@@ -56,4 +58,4 @@ const mapStateToProps = function (state: { swap: SwapState, wallet: WalletState 
     }
 }
 
-export default connect(mapStateToProps)(Swap);
+export default connect(mapStateToProps)(withTranslation()(Swap));
