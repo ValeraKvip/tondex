@@ -2,7 +2,10 @@ import { WalletBase } from "./WalletBase";
 
 
 export default class MetaMaskWallet extends WalletBase {
-  
+    disconnect(): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
 
     ethereum: any;
     address?: string;

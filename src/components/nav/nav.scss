@@ -5,12 +5,13 @@ nav {
     display: flex;
     padding-left: 16px;
     padding-right: 16px;
-    background: $dark-primary;
-    color: white;
+    background: var(--primary-bg);// $dark-primary;
+  //  color: white;
     align-items: center;
     justify-content: space-between;
     -webkit-box-align: center;
     align-items: center;
+
     //width: 100%;
 
     .logo-link {
@@ -23,7 +24,7 @@ nav {
         display: flex;
         align-items: center;
         .app-name {
-            color: white;
+           // color: white;
             font-weight: 900;
             margin-left: 12px;
             text-align: center;
@@ -33,7 +34,7 @@ nav {
 
         a {
             text-decoration: none;
-            color: white;           
+            color: var(--text-color);           
         }
 
         .nav-btns {
@@ -48,9 +49,9 @@ nav {
         }
 
         .nav-btns-active {
-            a {
+           // a {
                 color: $light-primary;
-            }
+           // }
         }
     }
 
@@ -68,6 +69,7 @@ nav {
 
     .theme-switch {
         margin: 0 16px;
+        cursor: pointer;
 
         .icon {
             fill: rgb(206, 206, 66);
@@ -79,7 +81,7 @@ nav {
     }
 
     .locale-btn {
-        fill: white;
+        fill: var(--text-color);
         width: 24px;
         height: 24px;
         vertical-align: middle;

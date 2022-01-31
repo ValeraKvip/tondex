@@ -35,15 +35,7 @@ export default class WalletController extends EventEmitter {
     }
   }
 
-  async getAbi(address: string) {
-    const abi = await axios.get(`https://api.etherscan.io/api?module=contract&action=getabi&address=${address}&apikey=K9RZDMVXRCE2N8W8UFA84FX5XM3PDQYDDZ`)
-    console.log('getAbi', abi.data);
-    if (abi.data.status == 1) {
-      return JSON.parse(abi.data.result);
-    }
 
-    return null;
-  }
 
   async checkout() {
     if (!this.provider) {
@@ -58,16 +50,27 @@ export default class WalletController extends EventEmitter {
     }
   }
 
+  isConnected(): boolean {
+    return this.provider?.isConnected() ?? false;
+  }
+
   async connect() {
-    if (this.provider?.connect()) {
-      store.dispatch(updateWalletAddress(this.provider.getAddress() || ''));
+    if (await this.provider?.connect()) {
+      store.dispatch(updateWalletAddress(this.provider?.getAddress() || ''));
+      this.emit(ACCOUNT_CONNECTED, this.address);
+    }
+  }
+
+  async disconnect() {
+    if (await this.provider?.disconnect()) {
+      store.dispatch(updateWalletAddress(''));
       this.emit(ACCOUNT_CONNECTED, this.address);
     }
   }
 
   async getBalance(token_address: string) {
     const balance = this.provider?.getBalance(token_address);
-  //  console.log("#BALANCE", balance);
+    //  console.log("#BALANCE", balance);
     return balance || 0;
     // if (!this.address) {
     //     console.log('Wallet does not connected');

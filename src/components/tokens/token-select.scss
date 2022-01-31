@@ -17,7 +17,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: $dark-primary;
+        background: var(--primary-bg);
         width: 100%;
         max-width: 480px;
         height: 100%;
@@ -32,12 +32,18 @@
             border-bottom: 1px white solid;
 
             .most-used-item {
+                cursor: pointer;
+
+                &:hover{
+                    border-color:  var(--secondary-bg);
+                }
+
                 margin: 4px;
-                border: 2px solid $light-primary;
+                border: 2px solid var(--input-bg);
                 border-radius: 25px;
                 display: flex;
                 padding: 8px 12px;
-                color: white;
+                color:  var(--text-color);
                 text-align: left;
                 align-items: center;
 
@@ -56,13 +62,18 @@
             .close-btn {
                 width: 20px;
                 height: 20px;
-                fill: white;
+                fill:  var(--text-color);
+                cursor: pointer;
+
+                &:hover{
+                    fill:  var(--secondary-bg);
+                }
             }
 
             .token-select-header {
                 display: flex;
                 justify-content: space-between;
-                color: white;
+                color:  var(--text-color);
                 padding: 20px;
                 font-size: 20px;
                 font-weight: 900;
@@ -72,7 +83,7 @@
         .token-select-search {
             margin: 8px 16px;
             //  margin-top: 0;
-            background-color: $input-bg-color;
+            background-color: var(--input-bg);
             border-radius: 25px;
             padding: 16px;
             border: 2px solid transparent;
@@ -89,7 +100,7 @@
                 background: transparent;
                 border: none;
                 outline: none;
-                color: white;
+                color: var(--text-color);
                 font-weight: 600;
             }
         }
@@ -115,15 +126,16 @@
         }
 
         .token-item-empty {
-            color: white;
+            color:  var(--text-color);
             font-size: 16px;
             font-weight: 900;
         }
 
         .token-item {
+            cursor: pointer;
             display: flex;
             padding: 8px 0;
-            color: white;
+            color:  var(--text-color);
             text-align: left;
             align-items: center;
 

@@ -1,0 +1,23 @@
+.page-pool-details{
+    display: flex;
+    justify-content: center;
+
+    .page-pool-container{
+        width: 100%;
+        margin:  100px 20px;
+        max-width: 480px;
+        background-color: var(--primary-bg);
+        border-radius: 25px;
+        height: fit-content;
+        padding: 16px;
+
+        .page-pool-header{
+            display: flex;
+            justify-content: space-between;
+            img{
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}

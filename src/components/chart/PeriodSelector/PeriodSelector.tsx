@@ -10,7 +10,7 @@ export default function PeriodSelector(props: { active: number, changePeriod: (i
             {
                 btns.map((btn, index) => {
                     const className = index === props.active ? 'active' : '';
-                    return (<a className={className} href='#' onClick={() => {
+                    return (<a className={className} href='#' key={btn} onClick={() => {
                         if (index !== props.active) {
                             props.changePeriod(index)
                         }

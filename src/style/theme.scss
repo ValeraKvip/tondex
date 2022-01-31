@@ -2,9 +2,11 @@
 
 body {
     font-family: "Mulish", sans-serif;
+    color: var(--text-color);
+    --dark-primary: #303757;
 }
 
-$dark-primary: #303757;
+$dark-primary: var(--dark-primary);
 $light-primary: #0088cc;
 $dark-accent: rgba(58, 55, 55, 0.884);
 $input-bg-color: rgb(75, 95, 129);
@@ -23,6 +25,12 @@ $input-bg-color: rgb(75, 95, 129);
     font-weight: 900;
 }
 
+.btn-interact {
+    &:hover {
+        transform: scale(1.05) perspective(1px);
+    }
+}
+
 .modal {
     position: absolute;
     top: 50%;
@@ -30,4 +38,53 @@ $input-bg-color: rgb(75, 95, 129);
     transform: translate(-50%, -50%);
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+}
 
+.flex-space-between {
+    @extend .flex;
+    justify-content: space-between;
+}
+
+.hide {
+    display: none;
+}
+
+.tooltip {
+    position: relative;
+    .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: var(--secondary-bg);
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        bottom: 100%;
+        right: 0;
+        //margin-left: -60px;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.page {
+    background: var(--primary-bg);
+    // background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(48, 55, 87, 1) 100%, rgba(0, 212, 255, 1) 100%);
+    background: linear-gradient(
+        180deg,
+        var(--swap-gradient1) 0%,
+        var(--swap-gradient2) 100%,
+        var(--swap-gradient3) 100%
+    );
+    display: flex;
+    flex-grow: 1;
+}

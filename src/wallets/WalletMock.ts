@@ -1,8 +1,16 @@
+import store from "../store/store";
+import { updateWalletAddress } from "../store/WalletReducer";
 import { WalletBase } from "./WalletBase";
 
 const WALLET_ADDRESS = 'WALLET_ADDRESS';
 
 export default class WalletMock extends WalletBase {
+    async disconnect(): Promise<boolean> {
+        window.localStorage.setItem(WALLET_ADDRESS, '');
+        this.address = '';
+      
+        return true;
+    }
 
     data: {
         id: string,
@@ -12,7 +20,7 @@ export default class WalletMock extends WalletBase {
     address?: string;
 
     isConnected(): boolean {
-        return this.address != null;
+        return store.getState().wallet.address?.length > 0;
     }
 
     async checkout(): Promise<void> {

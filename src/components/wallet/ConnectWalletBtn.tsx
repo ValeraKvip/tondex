@@ -30,9 +30,18 @@ class ConnectWalletBtn extends React.Component<{ address: string }> {
     return `${this.props.address.substring(0, 5)}...${this.props.address.substring(this.props.address.length - 5, this.props.address.length)} `;
   }
 
+  onClick(){
+    if(ConnectWallet.instance().isConnected()){
+      ConnectWallet.instance().disconnect()
+    }else{
+      ConnectWallet.instance().connect()
+    }
+    
+  }
+
   render() {
     return (
-      <a className="connect-wallet" onClick={()=>ConnectWallet.instance().connect()}>
+      <a className="connect-wallet btn-interact" onClick={this.onClick.bind(this)}>
         <span>{this.getAddress()}</span>
       </a>
     );

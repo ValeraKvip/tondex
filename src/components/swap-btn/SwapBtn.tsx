@@ -1,32 +1,37 @@
 import React from "react";
+import { connect } from "react-redux";
 import WalletController from "../../controllers/WalletController";
 import CoinData from "../../models/CoinData";
+import  ConfirmSwap  from "../../pages/swap/confirm_swap/ConfirmSwap";
+import { SwapState } from "../../store/SwapReducer";
 import './swap-btn.scss';
 
-interface Props{
+interface Props {
     to: CoinData,
     from: CoinData,
 }
 
-interface State{
-    balance: number
+interface State {
+    balance: number,
+    showConfirmSwap: boolean
 }
 
-export default class SwapBtn extends React.Component<Props,State> {
+export class SwapBtn extends React.Component<Props, State> {
 
     constructor(prop: any) {
         super(prop);
         this.state = {
-            balance: 0
+            balance: 0,
+            showConfirmSwap: false
         };
     }
 
 
     async componentDidUpdate(prevProps: Props, prevState: State) {
-       
+
         const balance = await WalletController.instance().getBalance(this.props.from.token.id)
-  
-        if(prevState.balance !== balance){
+
+        if (prevState.balance !== balance) {
             this.setState({
                 balance
             })
@@ -34,15 +39,33 @@ export default class SwapBtn extends React.Component<Props,State> {
     }
 
     render() {
-        var btn = this.state.balance >= this.props.from.value && this.props.from.value != 0
-            ? <div className="swap-btn">Swap</div >
-            : <div className="swap-btn-disabled">Insufficient  balance</div >
+        var confirmSwap = null;
+        if (this.state.showConfirmSwap) {
+            confirmSwap = <ConfirmSwap onClose={() => this.setState({ showConfirmSwap: false })} ></ConfirmSwap>
+        }
 
-            if(!this.props.from.value){
-                btn = <div className="swap-btn-disabled">Enter an amount</div >
-            }
+        var btn = this.state.balance >= this.props.from.value && this.props.from.value != 0
+            ? <div className="swap-btn btn-interact" onClick={() => this.setState({ showConfirmSwap: true })}>Swap</div >
+            : <div className="swap-btn-disabled btn-interact">Insufficient  balance</div >
+
+        if (!this.props.from.value) {
+            btn = <div className="swap-btn-disabled btn-interact">Enter an amount</div >
+        }
         return (
-            btn
+            <div>
+                {btn}
+                {confirmSwap}
+            </div>
         )
     }
 }
+
+const mapStateToProps = function (state: { swap: SwapState }) {
+    return {
+        from: state.swap.from,
+        to: state.swap.to,
+
+    }
+}
+
+export default connect(mapStateToProps)(SwapBtn);

@@ -2,14 +2,14 @@
 .period-selector{
     font-size: 20px;
     font-weight: 900;
-    color:white;// $input-bg-color;
+    color:var(--text-color);// $input-bg-color;
 
     .active{
-      color:$light-primary
+      color:var(--text-color-active)
     }
     a{
       margin-left: 5px;
       text-decoration: none;
-      color:white;
+      color:var(--text-color);
     }
   }

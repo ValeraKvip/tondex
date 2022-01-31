@@ -1,3 +1,13 @@
+1. Since the API was not provided, the application uses different third-party providers, the data of which may not match. Therefore, the application uses a lot of stubs, and only emulates working with real data. Don't expect the data on the chart to be realistic.
+
+2. Also, money will not be debited from the wallet, since this is also a stub.
+
+The application uses next dependencies:
+react, redux, Chart.js, lottie-web
+
+All the rest is rubbish, that I haven't removed.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,0 +1,11 @@
+{
+    "--primary-bg": "#303757",
+    "--secondary-bg": "#0088cc",
+    "--input-bg": "#4b5f81",
+    "--text-color": "#ffffff",
+    "--text-color-active": "#0088cc",
+    "--swap-gradient1": "#020024",
+    "--swap-gradient2": "#303757",
+    "--swap-gradient3": "#00d4ff"
+    
+}

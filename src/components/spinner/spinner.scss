@@ -2,7 +2,7 @@
 
 .spinner {
     border: 8px solid $light-primary;
-    border-top: 8px solid $dark-primary;
+    border-top: 8px solid  var(--primary-bg);
     border-radius: 50%;
     animation: spin 2s linear infinite;
 }

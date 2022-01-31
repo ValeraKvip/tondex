@@ -36,24 +36,13 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
         this.loadTokens();
     }
 
-    async loadTokens() {
-        //  const res =  await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+    async loadTokens() {     
         const res = await axios.get('assets/tokens.json');
 
         if (res) {
             console.log('res.data', res.data);
 
             const tokens = this.state.tokens;
-            // const tokens = await import('../../assets/tokens');
-            //   console.log('token',tokens)
-            // if (tokens?.length === 0) {
-            //     tokens.push({
-            //         "id": "toncoin",
-            //         "symbol": "ton",
-            //         "name": "Toncoin",
-            //         "image": "assets/icons/ton.svg"
-            //     });
-            // }
             tokens.push(...res.data);
             this.setState({
                 tokens: tokens as any,
@@ -69,8 +58,7 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
     }
 
     getMostUsedTokens(): Token[] {
-        const mostUsed = window.localStorage.getItem(MOST_USED_TOKENS);
-        console.log('mostUsed', mostUsed)
+        const mostUsed = window.localStorage.getItem(MOST_USED_TOKENS);      
         return mostUsed ? JSON.parse(mostUsed) : [];
     }
 
@@ -83,8 +71,7 @@ export default class TokenSelect extends React.Component<{ onClose: () => void, 
                 mostUsed.splice(0, 1);
             }
 
-            mostUsed.push(token);
-            console.log('onSelect', 'add')
+            mostUsed.push(token);           
             window.localStorage.setItem(MOST_USED_TOKENS, JSON.stringify(mostUsed));
         }
 

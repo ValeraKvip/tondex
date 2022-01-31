@@ -1,28 +1,28 @@
 import './currency-input.scss';
 import CoinData from '../../../models/CoinData';
-import { checkInputIsFloat, formatPrice } from '../../../utils';
+import { checkInputIsFloat } from '../../../utils';
 import React from 'react';
 import TokenSelect from '../../../components/tokens/TokenSelects';
 import Token from '../../../models/Token';
 import WalletController from '../../../controllers/WalletController';
-import { ACCOUNT_CONNECTED } from '../../../wallets/WalletEvents';
 import store from '../../../store/store';
+import { WalletState } from '../../../store/WalletReducer';
+import { connect } from 'react-redux';
 
 interface Props {
     data: CoinData,
-    onValueSet: (value: number, token: Token) => any,
-    onSelectCoin: (token: Token) => void
+    onValueSet: (value: string, token: Token) => any,
+    onSelectCoin: (token: Token) => void,
+    wallet:WalletState
 }
-
 
 interface State {
     showSelectToken: boolean,
     balance: number
 }
 
-export default class CurrencyInput extends React.Component<Props, State>
+export  class CurrencyInput extends React.Component<Props, State>
 {
-
     constructor(props: any) {
         super(props);
 
@@ -34,50 +34,40 @@ export default class CurrencyInput extends React.Component<Props, State>
         this.onValueSet = this.onValueSet.bind(this);
     }
 
-    async componentDidMount() {
-        // this.setState({
-        //     balance: await WalletController.instance().getBalance(this.props.data.token.id)
-        // });
-
-        // WalletController.instance().on(ACCOUNT_CONNECTED, async () => {
-        //     console.log('Connected');
-        //     this.setState({
-        //         balance: await WalletController.instance().getBalance(this.props.data.token.id)
-        //     })
-        // });
+    async componentDidUpdate(prevProps: Props, prevState: State) {
+        this.updateBalance(prevState);
 
     }
 
-    async componentDidUpdate(prevProps: Props, prevState: State) {
-       
-        const balance = await WalletController.instance().getBalance(this.props.data.token.id)
-       // console.log('componentDidUpdate',prevProps ,prevState)
-        if(prevState.balance !== balance){
+    componentDidMount(){
+        this.updateBalance();
+    }
+
+    async updateBalance(prevState?: State) {
+        const balance = await WalletController.instance().getBalance(this.props.data.token.id)        
+        if (prevState?.balance !== balance) {
             this.setState({
                 balance
             })
         }
     }
 
-
-
-    onValueSet(evt: React.MouseEvent<HTMLInputElement>) {      
-        if (!checkInputIsFloat(evt.currentTarget.value)) {
+    onValueSet(evt: React.ChangeEvent<HTMLInputElement>) {
+        if (!checkInputIsFloat(evt.target.value)) {
             return;
         }
 
-        this.props.onValueSet(Number(evt.currentTarget.value), this.props.data.token);
+        this.props.onValueSet((evt.target.value) as any, this.props.data.token);
     }
 
     shortPrice(price: any, fixed: number = 6) {
         const num = Number.parseFloat(price);
-        if (isNaN(num) || String(price).match(/\d[.]0*$/)) {
+        if (isNaN(num) || String(price).match(/^[0-9]+.[0]*$/)) {// || String(price).match(/\d[.]0*$/)
             return price;
         }
 
         return Number(num.toFixed(fixed));
     }
-
 
     render(): React.ReactNode {
         var showModal = null;
@@ -89,7 +79,7 @@ export default class CurrencyInput extends React.Component<Props, State>
             <div className='currency-input' >
                 <div className='currency-input-top'>
                     <div>
-                        <input className='in-crypto' type="text" value={(this.props.data.value)} onInput={this.onValueSet} placeholder='0' />
+                        <input className='in-crypto' type="text" value={this.shortPrice(this.props.data.value)} onInput={this.onValueSet} placeholder='0' />
                     </div>
                     <div>
                         <a className='selected-currency' onClick={() => this.setState({ showSelectToken: true })}>
@@ -100,9 +90,9 @@ export default class CurrencyInput extends React.Component<Props, State>
                 </div>
                 <div className='currency-input-bottom'>
                     <div >
-                        {this.shortPrice(this.props.data.price * this.props.data.value, 3)}$ (1 {this.props.data.token.symbol} ~ {this.shortPrice(this.props.data.price, 2)}$)
+                        {this.shortPrice(this.props.data.price * Number(this.props.data.value), 3)}$ (1 {this.props.data.token.symbol} ~ {this.shortPrice(this.props.data.price, 2)}$)
                     </div>
-                    <span >{store.getState().wallet.address ? `Balance: ${this.state.balance}` : ''}</span>
+                    <span >{this.props.wallet.address ? `Balance: ${this.state.balance}` : ''}</span>
 
                 </div>
                 {showModal}
@@ -111,3 +101,10 @@ export default class CurrencyInput extends React.Component<Props, State>
     }
 }
 
+const mapStateToProps = function (state: {wallet: WalletState }) {
+    return {      
+        wallet: state.wallet
+    }
+}
+
+export default connect(mapStateToProps)(CurrencyInput);
