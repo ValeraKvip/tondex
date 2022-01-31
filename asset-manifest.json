@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/tondex/static/css/main.eb2bb144.css",
+    "main.js": "/tondex/static/js/main.020dc6b8.js",
+    "static/js/787.e0d7268f.chunk.js": "/tondex/static/js/787.e0d7268f.chunk.js",
+    "static/media/ton_symbol.svg": "/tondex/static/media/ton_symbol.bb8c18e2437c78dd3ef842bce7f6ebe8.svg",
+    "static/media/language.svg": "/tondex/static/media/language.74c6d747f43fea2844c29902cd6754ba.svg",
+    "static/media/sun.svg": "/tondex/static/media/sun.ed76b87915100101eabc67b368614949.svg",
+    "static/media/settings.svg": "/tondex/static/media/settings.0520944ced8815d2a5aa7c529a636ed0.svg",
+    "index.html": "/tondex/index.html",
+    "static/media/close.svg": "/tondex/static/media/close.855ff9fa3eb8e01f77d549d74c884668.svg",
+    "static/media/arrow_cycle.svg": "/tondex/static/media/arrow_cycle.aaf2dd8fc44312258c0cddf5b472101a.svg",
+    "static/media/down_arrow_icon.svg": "/tondex/static/media/down_arrow_icon.4905287503da052850e0ee7fea433a9e.svg",
+    "static/media/moon.svg": "/tondex/static/media/moon.d018c35e5acba922a8efe5afe0aa43a0.svg",
+    "main.eb2bb144.css.map": "/tondex/static/css/main.eb2bb144.css.map",
+    "main.020dc6b8.js.map": "/tondex/static/js/main.020dc6b8.js.map",
+    "787.e0d7268f.chunk.js.map": "/tondex/static/js/787.e0d7268f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb2bb144.css",
+    "static/js/main.020dc6b8.js"
+  ]
+}
