@@ -49,7 +49,7 @@ export class SavedPools extends React.Component<SavedPoolState,any> {
                                     <span>{pool.tier}%</span>
                                     <div className=''>
                                         <RemovePoolBtn pool={pool} index={index}></RemovePoolBtn>
-                                        {/* <div className='btn btn-interact' onClick={async () =>this.setState({showRemoveConfirm:true})}>Remove</div> */}
+                                       
                                     </div>
                                 </div>
 
@@ -63,7 +63,7 @@ export class SavedPools extends React.Component<SavedPoolState,any> {
         )
     }
 }
-// PoolController.instance().removePool(index)
+
 const mapStateToProps = function (state: { savedPool: SavedPoolState }) {
     return {
         pools: state.savedPool.pools,

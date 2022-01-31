@@ -2,7 +2,7 @@
 
 #swap-page {
     background:  var(--primary-bg);
-   // background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgba(48, 55, 87, 1) 100%, rgba(0, 212, 255, 1) 100%);
+
    background: linear-gradient(180deg, var(--swap-gradient1) 0%, var(--swap-gradient2) 100%, var(--swap-gradient3) 100%);
     display: flex;
     justify-content: center;

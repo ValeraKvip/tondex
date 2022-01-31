@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import  SupplyBtn  from "../../../components/supply-btn/SupplyBtn";
-import SwapBtn from "../../../components/swap-btn/SwapBtn";
 import ConnectWalletBtn from "../../../components/wallet/ConnectWalletBtn";
 import MarketWatch, { CoinPrice } from "../../../models/MarketWatch";
 import Token from "../../../models/Token";
@@ -76,16 +75,14 @@ export class AddPool extends React.Component<Prop, any> {
         const coin = { ...coins[index] };
         coin.token = token;
         coins[index] = coin;
-        // this.setState({
-        //     coins
-        // })
+      
 
         updatePool({
             from: coins[0],
             to: coins[1],
         });
 
-        //  store.dispatch(updateSwap({ from: coins[0], to: coins[1], origin: this.props.origin }));
+      
         this.marketWatch.setTokens(coins[0].token, coins[1].token);
     }
 

@@ -36,7 +36,6 @@ export default class WalletController extends EventEmitter {
   }
 
 
-
   async checkout() {
     if (!this.provider) {
       console.log(`provider doesn't exists`);
@@ -70,14 +69,7 @@ export default class WalletController extends EventEmitter {
 
   async getBalance(token_address: string) {
     const balance = this.provider?.getBalance(token_address);
-    //  console.log("#BALANCE", balance);
     return balance || 0;
-    // if (!this.address) {
-    //     console.log('Wallet does not connected');
-    //     return;
-    // }
-
-    // return this.ethereum.request({ method: 'eth_getBalance', params: [token_address, 'latest'] });
   }
 
 }

@@ -71,7 +71,7 @@ export class ConfirmSwap extends React.Component<Props, { done: boolean }> {
 
                             <p className='swap-confirm-note'>
                                 {t('swap.confirm.info',{min:this.getMinimumReceived(), symbol:this.props.to.token.symbol})}
-                                {/* Output is estimated. You will receive at least {this.getMinimumReceived()} {this.props.to.token.symbol} or the transaction will revert */}
+                               
                             </p>
 
                             <div className='swap-confirm-info'>

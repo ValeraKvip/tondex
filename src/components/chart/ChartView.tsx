@@ -5,7 +5,6 @@ import { Chart, registerables } from 'chart.js';
 import CoinData from '../../models/CoinData';
 import axios from 'axios';
 import PeriodSelector from './PeriodSelector/PeriodSelector';
-import Toggle from '../toggle/Toggle';
 import LottieView from '../lottie/LottieView';
 import { delay } from '../../utils';
 Chart.register(...registerables);
@@ -180,11 +179,8 @@ export default class ChartView extends React.Component<Props, State> {
         padding: 0
       },
       scales: {
-        x: {
-          // type: 'line', 
-          ticks: {
-
-            //   autoSkip: true,
+        x: {           
+          ticks: {            
             maxTicksLimit: 10,
             maxRotation: 0,
             minRotation: 0,
@@ -196,8 +192,7 @@ export default class ChartView extends React.Component<Props, State> {
 
           }
         },
-        y: {
-          //       type: 'logarithmic',    
+        y: {            
           grid: {
             drawBorder: false,
             display: false
@@ -221,7 +216,7 @@ export default class ChartView extends React.Component<Props, State> {
     const plugins = [{
       afterDraw: (chart: any) => {
         if (this.state.chartData?.datasets?.[0]?.data && this.mouseIn) {
-          //  console.log('chart', chart)
+        
           var ctx = chart.ctx;
           var xAxis = chart.scales['x'];
           var yAxis = chart.scales['y'];
@@ -249,8 +244,7 @@ export default class ChartView extends React.Component<Props, State> {
           <div className='chart-toggle'>
             <img className='icon' src={this.props.from.token.image} />
             <img className='icon' src={this.props.to.token.image} />
-            {/* <span>Detailed</span>
-            <Toggle onToggle={() => { console.log('Toggle') }}></Toggle> */}
+           
           </div>
           <PeriodSelector active={this.state.days === 30 ? 2 : this.state.days === 7 ? 1 : 0} changePeriod={this.changePeriod}></PeriodSelector>
 

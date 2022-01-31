@@ -1,11 +1,11 @@
 export default function WalletReducer(state:WalletState = {
     address:''
 }, action: WalletAction) {
-   // console.log("WalletAction gg",state,action)
+  
     switch (action.type) {
         case UPDATE_WALLET_ADDRESS: 
         return {address: action.address};
-        //case ACTION_2: return { value: action.value_2 };
+      
 
         default: return state;
     }

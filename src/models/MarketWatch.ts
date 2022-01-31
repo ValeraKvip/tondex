@@ -3,7 +3,7 @@ import Token from "./Token";
 
 export default class MarketWatch {
     interval?: any;
-    //  token: string;
+  
     tokens: Token[] = [];
     update: (priceList: CoinPrice) => void
 
@@ -24,7 +24,7 @@ export default class MarketWatch {
         try {
             this.stop();
             this.update = update;
-            //   console.log("START ");
+          
             const getData = async () => {
                 const requests = [] as any;
                 const coin0 = this.tokens[0];
@@ -39,7 +39,7 @@ export default class MarketWatch {
                     [coin1.id]: Number.parseFloat(response.data[id1].usd)
                 };
 
-              //     console.log("result ", result,response);
+             
                 update(result);
             }
             getData();

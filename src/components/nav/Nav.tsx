@@ -19,7 +19,6 @@ export default function Nav() {
             <NavBtns></NavBtns>
             </div>
    
-
             <div className='nav-container'>
                 <SwitchLocale></SwitchLocale>
                 <DayNightButton></DayNightButton>

@@ -5,7 +5,6 @@
   margin: 100px 20px;
   margin-right: 0;
   flex-grow: 1;
-  // max-height: 50%;
   border-radius: 25px;
   background-color:  var(--primary-bg);
   padding: 16px;
@@ -35,7 +34,7 @@
     font-weight: 900;
     font-size: 25px;
     justify-content: space-between;
-    //  align-items: center;
+  
 
     .chart-toggle {
       font-size: 20px;
@@ -98,13 +97,9 @@
 }
 
 #swap-chart {
-  // max-width: 500px;
-  //   max-width:  50%;
   width: 100% !important;
   max-height: 500px !important;
-  //max-height: 100vh;
 
-  //  flex: 50%;
   canvas {
     max-height: 100vh;
   }

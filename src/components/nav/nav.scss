@@ -5,14 +5,12 @@ nav {
     display: flex;
     padding-left: 16px;
     padding-right: 16px;
-    background: var(--primary-bg);// $dark-primary;
-  //  color: white;
+    background: var(--primary-bg);
     align-items: center;
     justify-content: space-between;
     -webkit-box-align: center;
     align-items: center;
-
-    //width: 100%;
+    
 
     .logo-link {
         display: flex;
@@ -24,7 +22,7 @@ nav {
         display: flex;
         align-items: center;
         .app-name {
-           // color: white;
+           
             font-weight: 900;
             margin-left: 12px;
             text-align: center;
@@ -34,7 +32,7 @@ nav {
 
         a {
             text-decoration: none;
-            color: var(--text-color);           
+            color: var(--text-color);
         }
 
         .nav-btns {
@@ -44,14 +42,12 @@ nav {
             font-weight: 900;
 
             .nav-btn {
-                padding: 12px;             
+                padding: 12px;
             }
         }
 
         .nav-btns-active {
-           // a {
-                color: $light-primary;
-           // }
+            color: $light-primary;
         }
     }
 
@@ -63,7 +59,6 @@ nav {
 
     .nav-container {
         display: flex;
-        //  justify-content: space-between;
         align-items: center;
     }
 
@@ -79,6 +74,4 @@ nav {
             vertical-align: middle;
         }
     }
-
-    
 }
