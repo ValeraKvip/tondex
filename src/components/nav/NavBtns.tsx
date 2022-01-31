@@ -14,7 +14,11 @@ export default function () {
 
                 <NavLink to="/pools" className={({ isActive }) => (isActive ? 'nav-btns-active' : 'inactive')}>{t('nav.pools')}</NavLink>
             </li>
-            <li className="nav-btn">{t('nav.about')}</li>
+            <li className="nav-btn">
+                <a href="https://github.com/ValeraKvip/ton-dex" target="_blank" rel="noopener noreferrer" >
+                    {t('nav.about')}
+                </a>
+            </li>
         </ul>
     )
 }
